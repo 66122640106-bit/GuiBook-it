@@ -344,10 +344,16 @@
     </main>
     </div>
 
+    <!-- ส่วนท้าย: เพิ่มปุ่ม Export -->
     <footer class="border-t border-primary-100 bg-white/60 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-stone-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-stone-500">
             <p class="flex items-center gap-2"><i class="ph-fill ph-hard-drives text-primary-500"></i> IT Guide — ศูนย์รวมคู่มือ IT สำหรับพนักงาน</p>
-            <p>ข้อมูลถูกบันทึกไว้ในเบราว์เซอร์ของคุณ</p>
+            <div class="flex items-center gap-4">
+                <p>ดึงข้อมูลจาก GitHub Pages</p>
+                <button onclick="exportData()" class="bg-primary-100 text-primary-700 hover:bg-primary-200 px-4 py-2 rounded-xl font-medium transition-colors flex items-center gap-2">
+                    <i class="ph-bold ph-export"></i> Export ข้อมูล (แอดมิน)
+                </button>
+            </div>
         </div>
     </footer>
 
@@ -455,13 +461,27 @@
     <script>
         // ---------- Data ----------
         const STORAGE_KEY = 'it_manuals_v2';
+        
+        // 1. เปลี่ยนเลขนี้ทุกครั้งที่มีการนำข้อมูลใหม่ไปแปะใน GitHub (เช่น 1.1, 1.2) เพื่อบังคับให้คอมพิวเตอร์เครื่องอื่นล้างข้อมูลเก่าทิ้ง
+        const DATABASE_VERSION = '1.0'; 
+        
+        // 2. แอดมิน: นำข้อมูลที่ Copy จากปุ่ม Export วางแทนที่วงเล็บ [ ] ด้านล่างนี้
+        const DATABASE = [];
 
         function loadManuals() {
             try {
+                // ตรวจสอบว่าเวอร์ชันตรงกันไหม ถ้าไม่ตรง (มีคนแก้โค้ด DATABASE ใหม่) ให้ล้างของเก่าในเครื่องทิ้งเพื่อแสดงอันใหม่
+                const localVersion = localStorage.getItem(STORAGE_KEY + '_version');
+                if (localVersion !== DATABASE_VERSION && DATABASE.length > 0) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(DATABASE));
+                    localStorage.setItem(STORAGE_KEY + '_version', DATABASE_VERSION);
+                    return JSON.parse(JSON.stringify(DATABASE));
+                }
+
                 const raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
-                return Array.isArray(raw) ? raw : [];
+                return (Array.isArray(raw) && raw.length > 0) ? raw : JSON.parse(JSON.stringify(DATABASE));
             } catch (e) {
-                return [];
+                return JSON.parse(JSON.stringify(DATABASE));
             }
         }
 
@@ -481,6 +501,17 @@
                 showMessage('พื้นที่จัดเก็บเต็ม กรุณาลดขนาดหรือจำนวนรูปภาพ', true);
                 return false;
             }
+        }
+
+        // ฟังก์ชันสำหรับแอดมิน: ส่งออกข้อมูล
+        function exportData() {
+            const dataStr = JSON.stringify(manualsList, null, 2);
+            navigator.clipboard.writeText(dataStr).then(() => {
+                showMessage('คัดลอกข้อมูลสำเร็จ! นำไปวางที่ตัวแปร DATABASE บน GitHub ได้เลย');
+            }).catch(() => {
+                showMessage('ไม่สามารถคัดลอกได้อัตโนมัติ กรุณากด F12 เพื่อคัดลอก', true);
+                console.log(dataStr);
+            });
         }
 
         // ---------- Helpers ----------
