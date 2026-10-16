@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือพนักงาน IT ใหม่ | IT Newcomer Guide</title>
+    <meta name="description" content="ศูนย์รวมคู่มือการใช้งานซอฟต์แวร์ ฮาร์ดแวร์ และระบบเครือข่ายสำหรับพนักงานภายในองค์กร">
+    <meta name="theme-color" content="#ea580c">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%23ea580c'/><path d='M18 20h12a6 6 0 0 1 6 6v20a5 5 0 0 0-5-5H18zM46 20H40a6 6 0 0 0-6 6v20a5 5 0 0 1 5-5h7z' fill='white'/></svg>">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Thai-friendly fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Prompt:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"IBM Plex Sans Thai"', 'system-ui', 'sans-serif'],
+                        display: ['Prompt', '"IBM Plex Sans Thai"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                            950: '#431407',
+                        }
+                    },
+                    boxShadow: {
+                        soft: '0 1px 2px rgba(124,45,18,.04), 0 8px 24px -12px rgba(124,45,18,.18)',
+                        glow: '0 10px 30px -10px rgba(234,88,12,.55)',
+                    },
+                    keyframes: {
+                        fadeIn: { from: { opacity: 0, transform: 'translateY(6px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+                        float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                    },
+                    animation: {
+                        fadeIn: 'fadeIn .35s ease-out both',
+                        float: 'float 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #fff7ed; }
+        ::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 999px; border: 2px solid #fff7ed; }
+        ::-webkit-scrollbar-thumb:hover { background: #fb923c; }
+
+        body {
+            background-color: #fffaf5;
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(251,146,60,.10), transparent 40%),
+                radial-gradient(circle at 100% 0%, rgba(254,215,170,.35), transparent 35%);
+            background-attachment: fixed;
+        }
+        .dot-grid {
+            background-image: radial-gradient(rgba(255,255,255,.22) 1px, transparent 1px);
+            background-size: 18px 18px;
+        }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .modal { transition: opacity .2s ease; }
+        .modal.hidden { display: none; }
+        .modal-panel { animation: modalIn .22s cubic-bezier(.2,.8,.2,1) both; }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+        :focus-visible { outline: 2px solid #f97316; outline-offset: 2px; }
+    </style>
+</head>
+<body class="text-stone-800 antialiased selection:bg-primary-500 selection:text-white min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white/80 backdrop-blur-md border-b border-primary-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#/" class="flex-shrink-0 flex items-center gap-2.5 group">
+                        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 text-white flex items-center justify-center shadow-glow group-hover:rotate-6 transition-transform">
+                            <i class="ph-fill ph-hard-drives text-xl"></i>
+                        </span>
+                        <span class="font-display font-bold text-xl tracking-tight text-stone-900">IT<span class="text-primary-600">Guide</span></span>
+                    </a>
+                    <div class="hidden sm:ml-10 sm:flex sm:space-x-1">
+                        <a href="#/" id="nav-home" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-colors">หน้าแรก</a>
+                        <a href="#/manuals" id="nav-manuals" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-colors">คู่มือทั้งหมด</a>
+                    </div>
+                </div>
+                <div class="hidden sm:flex items-center gap-3">
+                    <button onclick="openAddModal()" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition-all shadow-glow hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="ph-bold ph-plus"></i> สร้างคู่มือ
+                    </button>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-lg text-stone-500 hover:text-primary-600 hover:bg-primary-50" aria-expanded="false" aria-controls="mobile-menu">
+                        <span class="sr-only">เปิดเมนู</span>
+                        <i class="ph ph-list text-2xl" id="menu-icon-open"></i>
+                        <i class="ph ph-x text-2xl hidden" id="menu-icon-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="sm:hidden hidden bg-white border-t border-primary-100" id="mobile-menu">
+            <div class="p-3 space-y-1">
+                <a href="#/" onclick="closeMobileMenu()" id="mobile-nav-home" class="mobile-nav-link block px-4 py-2.5 rounded-lg text-base font-medium">หน้าแรก</a>
+                <a href="#/manuals" onclick="closeMobileMenu()" id="mobile-nav-manuals" class="mobile-nav-link block px-4 py-2.5 rounded-lg text-base font-medium">คู่มือทั้งหมด</a>
+                <button onclick="closeMobileMenu(); openAddModal();" class="w-full mt-2 bg-primary-600 text-white px-4 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2">
+                    <i class="ph-bold ph-plus"></i> สร้างคู่มือ
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex-grow">
+    <!-- VIEW: HOME -->
+    <main id="view-home" class="view max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 animate-fadeIn">
+        <!-- Hero -->
+        <section class="relative rounded-[2rem] overflow-hidden bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800 text-white shadow-xl">
+            <div class="absolute inset-0 dot-grid opacity-60"></div>
+            <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-primary-300/30 blur-3xl"></div>
+            <div class="absolute -left-20 -bottom-32 w-80 h-80 rounded-full bg-amber-300/25 blur-3xl"></div>
+
+            <div class="relative grid lg:grid-cols-5 gap-10 p-8 sm:p-12 lg:p-14 items-center">
+                <div class="lg:col-span-3">
+                    <span class="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-white/15 text-primary-50 text-sm font-medium mb-6 ring-1 ring-white/25">
+                        <i class="ph-fill ph-sparkle"></i> สำหรับพนักงานใหม่
+                    </span>
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.15] tracking-tight mb-5">
+                        ยินดีต้อนรับสู่<br><span class="text-amber-200">ศูนย์รวมคู่มือ IT</span>
+                    </h1>
+                    <p class="text-lg text-primary-50/90 mb-8 leading-relaxed max-w-xl">
+                        ระบบจัดเก็บเอกสารและคู่มือการใช้งานซอฟต์แวร์ ฮาร์ดแวร์ และระบบเครือข่ายสำหรับพนักงานภายในองค์กร ค้นหาง่าย อ่านเข้าใจได้ทันที
+                    </p>
+
+                    <form onsubmit="event.preventDefault(); heroSearch();" class="flex flex-col sm:flex-row gap-3 max-w-xl">
+                        <div class="relative flex-grow">
+                            <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-primary-400 text-lg"></i>
+                            <input id="hero-search" type="search" class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white text-stone-800 placeholder-stone-400 shadow-lg outline-none focus:ring-4 focus:ring-amber-200/60" placeholder="ค้นหาคู่มือ เช่น VPN, อีเมล, เครื่องพิมพ์...">
+                        </div>
+                        <button type="submit" class="bg-stone-900 hover:bg-stone-800 text-white px-6 py-3.5 rounded-xl font-semibold shadow-lg transition-colors flex items-center justify-center gap-2">
+                            ค้นหา <i class="ph-bold ph-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Stats / visual -->
+                <div class="lg:col-span-2 hidden lg:block">
+                    <div class="relative animate-float">
+                        <div class="bg-white/10 backdrop-blur-md rounded-3xl p-6 ring-1 ring-white/25 shadow-2xl">
+                            <div class="flex items-center gap-3 mb-5">
+                                <span class="w-11 h-11 rounded-2xl bg-white text-primary-600 flex items-center justify-center"><i class="ph-fill ph-books text-2xl"></i></span>
+                                <div>
+                                    <p class="text-sm text-primary-100">คลังความรู้ของทีม</p>
+                                    <p class="font-display font-semibold text-lg">ภาพรวมคู่มือ</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white rounded-2xl p-4 text-stone-800">
+                                    <p class="text-xs text-stone-500">คู่มือทั้งหมด</p>
+                                    <p id="stat-manuals" class="font-display text-3xl font-bold text-primary-600">0</p>
+                                </div>
+                                <div class="bg-white rounded-2xl p-4 text-stone-800">
+                                    <p class="text-xs text-stone-500">หัวข้อเนื้อหา</p>
+                                    <p id="stat-contents" class="font-display text-3xl font-bold text-primary-600">0</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 bg-white/15 rounded-2xl p-4 text-sm flex items-center gap-2">
+                                <i class="ph-fill ph-clock-clockwise text-amber-200"></i>
+                                <span>อัปเดตล่าสุด: <span id="stat-updated" class="font-semibold">-</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick start -->
+        <section class="mt-12">
+            <div class="flex items-end justify-between mb-5">
+                <div>
+                    <p class="text-sm font-semibold text-primary-600 mb-1">เริ่มต้นใช้งาน</p>
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-stone-900">สิ่งที่ควรทำในสัปดาห์แรก</h2>
+                </div>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white rounded-2xl p-5 border border-primary-100 shadow-soft hover:-translate-y-1 transition-transform">
+                    <span class="w-11 h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mb-4"><i class="ph-duotone ph-lock-key text-2xl"></i></span>
+                    <h3 class="font-semibold text-stone-900 mb-1">เปลี่ยนรหัสผ่านครั้งแรก</h3>
+                    <p class="text-sm text-stone-500 leading-relaxed">ตั้งรหัสผ่านใหม่อย่างน้อย 12 ตัวอักษร และเปิดใช้การยืนยันตัวตน 2 ชั้น</p>
+                </div>
+                <div class="bg-white rounded-2xl p-5 border border-primary-100 shadow-soft hover:-translate-y-1 transition-transform">
+                    <span class="w-11 h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mb-4"><i class="ph-duotone ph-wifi-high text-2xl"></i></span>
+                    <h3 class="font-semibold text-stone-900 mb-1">เชื่อมต่อ Wi-Fi และ VPN</h3>
+                    <p class="text-sm text-stone-500 leading-relaxed">ใช้เครือข่ายของบริษัทในออฟฟิศ และเชื่อมต่อ VPN ทุกครั้งเมื่อทำงานนอกสถานที่</p>
+                </div>
+                <div class="bg-white rounded-2xl p-5 border border-primary-100 shadow-soft hover:-translate-y-1 transition-transform">
+                    <span class="w-11 h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mb-4"><i class="ph-duotone ph-envelope-simple text-2xl"></i></span>
+                    <h3 class="font-semibold text-stone-900 mb-1">ตั้งค่าอีเมลและปฏิทิน</h3>
+                    <p class="text-sm text-stone-500 leading-relaxed">เพิ่มบัญชีอีเมลองค์กรบนคอมพิวเตอร์และมือถือ พร้อมลายเซ็นมาตรฐาน</p>
+                </div>
+                <div class="bg-white rounded-2xl p-5 border border-primary-100 shadow-soft hover:-translate-y-1 transition-transform">
+                    <span class="w-11 h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mb-4"><i class="ph-duotone ph-shield-check text-2xl"></i></span>
+                    <h3 class="font-semibold text-stone-900 mb-1">ระวังอีเมลหลอกลวง</h3>
+                    <p class="text-sm text-stone-500 leading-relaxed">อย่าคลิกลิงก์หรือเปิดไฟล์แนบที่ไม่รู้จัก หากสงสัยให้แจ้งทีม IT ทันที</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent manuals -->
+        <section class="mt-12">
+            <div class="flex items-end justify-between mb-5 gap-4">
+                <div>
+                    <p class="text-sm font-semibold text-primary-600 mb-1">อัปเดตล่าสุด</p>
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-stone-900">คู่มือล่าสุด</h2>
+                </div>
+                <a href="#/manuals" class="text-sm font-semibold text-primary-600 hover:text-primary-700 flex items-center gap-1 whitespace-nowrap">ดูทั้งหมด <i class="ph-bold ph-arrow-right"></i></a>
+            </div>
+            <div id="recent-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <!-- VIEW: MANUALS -->
+    <main id="view-manuals" class="view max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 hidden animate-fadeIn">
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end mb-8 gap-5">
+            <div>
+                <p class="text-sm font-semibold text-primary-600 mb-1">คลังความรู้</p>
+                <h1 class="font-display text-3xl sm:text-4xl font-bold text-stone-900">คู่มือทั้งหมด</h1>
+                <p id="manuals-count" class="text-stone-500 mt-1 text-sm"></p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
+                <div class="relative w-full sm:w-72">
+                    <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400"></i>
+                    <input type="search" id="search-input" oninput="renderManuals()" class="block w-full pl-10 pr-3 py-2.5 border border-stone-200 rounded-xl bg-white placeholder-stone-400 outline-none focus:border-primary-400 focus:ring-4 focus:ring-primary-100 text-sm transition" placeholder="ค้นหาชื่อคู่มือหรือหัวข้อ...">
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <div class="flex border border-stone-200 rounded-xl bg-white overflow-hidden flex-grow sm:flex-grow-0">
+                        <label for="sort-select" class="sr-only">เรียงตาม</label>
+                        <select id="sort-select" onchange="renderManuals()" class="py-2.5 pl-3 pr-2 text-sm text-stone-700 outline-none bg-transparent cursor-pointer flex-grow">
+                            <option value="updated">อัปเดตล่าสุด</option>
+                            <option value="created">วันที่สร้าง</option>
+                            <option value="name">ชื่อ (ก-ฮ / A-Z)</option>
+                        </select>
+                        <button id="sort-dir-btn" onclick="toggleSortDir()" class="border-l border-stone-200 px-3 text-stone-500 hover:text-primary-600 hover:bg-primary-50 transition-colors" title="สลับลำดับ">
+                            <i id="sort-dir-icon" class="ph-bold ph-sort-descending"></i>
+                        </button>
+                    </div>
+                    <button onclick="openAddModal()" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center gap-2 shadow-glow whitespace-nowrap">
+                        <i class="ph-bold ph-plus"></i> เพิ่มคู่มือ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="manuals-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </main>
+
+    <!-- VIEW: MANUAL DETAIL -->
+    <main id="view-manual-detail" class="view max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 hidden animate-fadeIn">
+        <nav class="flex items-center gap-2 text-sm text-stone-500 mb-6" aria-label="breadcrumb">
+            <a href="#/manuals" class="hover:text-primary-600 flex items-center gap-1"><i class="ph ph-books"></i> คู่มือทั้งหมด</a>
+            <i class="ph ph-caret-right text-xs"></i>
+            <span id="crumb-manual" class="text-stone-800 font-medium truncate"></span>
+        </nav>
+
+        <div class="bg-white rounded-3xl shadow-soft border border-primary-100 overflow-hidden mb-8">
+            <div class="h-24 sm:h-28 bg-gradient-to-r from-primary-500 to-primary-700 relative">
+                <div class="absolute inset-0 dot-grid opacity-50"></div>
+            </div>
+            <div class="px-6 md:px-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-6 md:items-end -mt-14 relative">
+                <div id="detail-cover" class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-white ring-4 ring-white shadow-lg overflow-hidden flex-shrink-0"></div>
+                <div class="flex-grow min-w-0">
+                    <h1 id="detail-title" class="font-display text-2xl sm:text-3xl font-bold text-stone-900 mb-2 break-words"></h1>
+                    <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-stone-500">
+                        <span class="flex items-center gap-1.5"><i class="ph ph-calendar-plus text-primary-500"></i> <span id="detail-created"></span></span>
+                        <span class="flex items-center gap-1.5"><i class="ph ph-pencil-simple-line text-primary-500"></i> <span id="detail-updated"></span></span>
+                        <span class="flex items-center gap-1.5"><i class="ph ph-list-numbers text-primary-500"></i> <span id="detail-count"></span></span>
+                    </div>
+                </div>
+                <div class="flex gap-2 flex-shrink-0">
+                    <button onclick="openEditModal(currentManualId)" class="border border-stone-200 hover:border-primary-300 hover:bg-primary-50 text-stone-700 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center gap-2" title="แก้ไขคู่มือ">
+                        <i class="ph ph-pencil-simple"></i><span class="sm:hidden lg:inline">แก้ไข</span>
+                    </button>
+                    <button onclick="openAddContentModal()" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center gap-2 whitespace-nowrap shadow-glow">
+                        <i class="ph-bold ph-plus"></i> เพิ่มเนื้อหา
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="font-display text-xl font-semibold text-stone-900 mb-4 flex items-center gap-2"><i class="ph-fill ph-list-checks text-primary-500"></i> เนื้อหาและขั้นตอน</h2>
+        <div id="manual-content-list" class="space-y-3"></div>
+    </main>
+
+    <!-- VIEW: CONTENT DETAIL -->
+    <main id="view-content-detail" class="view max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 hidden animate-fadeIn">
+        <nav class="flex items-center gap-2 text-sm text-stone-500 mb-6 min-w-0" aria-label="breadcrumb">
+            <a href="#/manuals" class="hover:text-primary-600 flex-shrink-0"><i class="ph ph-books"></i></a>
+            <i class="ph ph-caret-right text-xs"></i>
+            <a id="crumb-back" href="#/manuals" class="hover:text-primary-600 truncate"></a>
+            <i class="ph ph-caret-right text-xs"></i>
+            <span id="crumb-content" class="text-stone-800 font-medium truncate"></span>
+        </nav>
+
+        <article class="bg-white rounded-3xl shadow-soft border border-primary-100 p-6 sm:p-10 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-400 via-primary-500 to-primary-700"></div>
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <h1 id="reading-title" class="font-display text-2xl sm:text-3xl font-bold text-stone-900 break-words"></h1>
+                <div class="flex gap-1 flex-shrink-0">
+                    <button onclick="openEditContentModal()" class="p-2 rounded-lg text-stone-400 hover:text-primary-600 hover:bg-primary-50 transition-colors" title="แก้ไขเนื้อหา"><i class="ph ph-pencil-simple text-xl"></i></button>
+                    <button onclick="deleteContent()" class="p-2 rounded-lg text-stone-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="ลบเนื้อหา"><i class="ph ph-trash text-xl"></i></button>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-stone-500 mb-8 pb-5 border-b border-stone-100">
+                <i class="ph ph-clock text-primary-500"></i> <span id="reading-date"></span>
+            </div>
+
+            <div id="reading-body" class="text-stone-700 whitespace-pre-line leading-loose text-[16px] md:text-[17px] break-words"></div>
+
+            <div id="reading-images-container" class="mt-10 hidden">
+                <h3 class="text-sm font-semibold text-stone-500 mb-3 flex items-center gap-2"><i class="ph ph-images"></i> รูปภาพประกอบ</h3>
+                <div id="reading-images" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+            </div>
+        </article>
+
+        <div id="content-pager" class="mt-6 grid grid-cols-2 gap-4"></div>
+    </main>
+    </div>
+
+    <footer class="border-t border-primary-100 bg-white/60 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-stone-500">
+            <p class="flex items-center gap-2"><i class="ph-fill ph-hard-drives text-primary-500"></i> IT Guide — ศูนย์รวมคู่มือ IT สำหรับพนักงาน</p>
+            <p>ข้อมูลถูกบันทึกไว้ในเบราว์เซอร์ของคุณ</p>
+        </div>
+    </footer>
+
+    <!-- Manual Modal -->
+    <div id="add-modal" class="modal fixed inset-0 bg-stone-900/50 hidden z-[60] flex items-center justify-center p-4 backdrop-blur-sm" onclick="if(event.target===this) closeAddModal()">
+        <div class="modal-panel bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="manual-modal-title">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-primary-100 bg-primary-50/60">
+                <h3 id="manual-modal-title" class="font-display text-lg font-semibold text-stone-900 flex items-center gap-2"></h3>
+                <button onclick="closeAddModal()" class="text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-white" aria-label="ปิด"><i class="ph ph-x text-xl"></i></button>
+            </div>
+            <form id="add-manual-form" class="p-6" onsubmit="event.preventDefault(); saveManual();">
+                <div class="space-y-5">
+                    <div>
+                        <label for="input-title" class="block text-sm font-medium text-stone-700 mb-1.5">ชื่อคู่มือ / ระบบ <span class="text-primary-600">*</span></label>
+                        <input type="text" id="input-title" required maxlength="120" class="w-full border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none focus:border-primary-400 focus:ring-4 focus:ring-primary-100 transition" placeholder="เช่น ระบบลาหยุด HR">
+                    </div>
+                    <div>
+                        <span class="block text-sm font-medium text-stone-700 mb-1.5">รูปภาพหน้าปก</span>
+                        <label class="cursor-pointer flex items-center gap-4 p-3 border-2 border-dashed border-primary-200 hover:border-primary-400 hover:bg-primary-50/50 rounded-xl transition-colors">
+                            <div id="manual-image-preview" class="w-16 h-16 rounded-lg bg-primary-50 text-primary-400 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                <i class="ph ph-image text-2xl"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-sm font-medium text-primary-700 flex items-center gap-1.5"><i class="ph ph-upload-simple"></i> เลือกไฟล์รูปภาพ</p>
+                                <p id="manual-file-name-display" class="text-xs text-stone-500 truncate">ยังไม่ได้เลือกไฟล์</p>
+                            </div>
+                            <input type="file" id="manual-image-file" accept="image/*" class="hidden" onchange="handleManualImageSelect(event)">
+                        </label>
+                        <p class="text-xs text-stone-400 mt-1.5">ไม่เกิน 2MB · หากเว้นว่าง ระบบจะสร้างหน้าปกสีส้มให้อัตโนมัติ</p>
+                        <input type="hidden" id="input-image" value="">
+                    </div>
+                </div>
+                <div class="mt-8 flex items-center gap-3">
+                    <button type="button" id="manual-delete-btn" onclick="deleteManual()" class="hidden mr-auto text-sm text-red-600 hover:bg-red-50 px-3 py-2 rounded-lg font-medium flex items-center gap-1.5"><i class="ph ph-trash"></i> ลบคู่มือ</button>
+                    <div class="ml-auto flex gap-3">
+                        <button type="button" onclick="closeAddModal()" class="px-4 py-2.5 text-stone-700 hover:bg-stone-100 rounded-xl font-medium transition-colors">ยกเลิก</button>
+                        <button type="submit" id="manual-submit-btn" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold transition-colors shadow-glow">บันทึก</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Content Modal -->
+    <div id="add-content-modal" class="modal fixed inset-0 bg-stone-900/50 hidden z-[60] flex items-center justify-center p-4 backdrop-blur-sm" onclick="if(event.target===this) closeAddContentModal()">
+        <div class="modal-panel bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="content-modal-title">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-primary-100 bg-primary-50/60 shrink-0">
+                <h3 id="content-modal-title" class="font-display text-lg font-semibold text-stone-900 flex items-center gap-2"></h3>
+                <button onclick="closeAddContentModal()" class="text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-white" aria-label="ปิด"><i class="ph ph-x text-xl"></i></button>
+            </div>
+            <form id="add-content-form" class="p-6 overflow-y-auto" onsubmit="event.preventDefault(); saveContent();">
+                <div class="space-y-5">
+                    <div>
+                        <label for="content-title" class="block text-sm font-medium text-stone-700 mb-1.5">หัวข้อเนื้อหา <span class="text-primary-600">*</span></label>
+                        <input type="text" id="content-title" required maxlength="160" class="w-full border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none focus:border-primary-400 focus:ring-4 focus:ring-primary-100 transition" placeholder="เช่น ขั้นตอนการติดตั้ง, การแก้ไขปัญหาเบื้องต้น">
+                    </div>
+                    <div>
+                        <label for="content-body" class="block text-sm font-medium text-stone-700 mb-1.5">รายละเอียด / ขั้นตอน <span class="text-primary-600">*</span></label>
+                        <textarea id="content-body" required rows="8" class="w-full border border-stone-200 rounded-xl px-3.5 py-2.5 outline-none focus:border-primary-400 focus:ring-4 focus:ring-primary-100 transition leading-relaxed" placeholder="1. เปิดโปรแกรม...&#10;2. คลิกที่เมนู...&#10;3. ..."></textarea>
+                    </div>
+                    <div>
+                        <span class="block text-sm font-medium text-stone-700 mb-1.5">รูปภาพประกอบ <span class="text-stone-400 font-normal">(เลือกได้หลายรูป)</span></span>
+                        <label class="cursor-pointer border-2 border-dashed border-primary-200 hover:border-primary-400 hover:bg-primary-50/50 text-primary-700 px-4 py-5 rounded-xl text-sm font-medium transition-colors flex flex-col items-center justify-center gap-1">
+                            <i class="ph ph-images text-3xl text-primary-400"></i>
+                            คลิกเพื่อเลือกไฟล์รูปภาพ
+                            <span class="text-xs text-stone-400 font-normal">ขนาดรวมไม่เกิน 5MB</span>
+                            <input type="file" id="content-image-file" accept="image/*" multiple class="hidden" onchange="handleMultipleImagesSelect(event)">
+                        </label>
+                        <div id="selected-images-preview" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mt-3 empty:hidden"></div>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end gap-3">
+                    <button type="button" onclick="closeAddContentModal()" class="px-4 py-2.5 text-stone-700 hover:bg-stone-100 rounded-xl font-medium transition-colors">ยกเลิก</button>
+                    <button type="submit" id="content-submit-btn" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold transition-colors shadow-glow">บันทึกเนื้อหา</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div id="confirm-modal" class="modal fixed inset-0 bg-stone-900/50 hidden z-[80] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="modal-panel bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center" role="alertdialog" aria-modal="true">
+            <span class="w-14 h-14 mx-auto rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-4"><i class="ph-fill ph-warning text-3xl"></i></span>
+            <h3 id="confirm-title" class="font-display text-lg font-semibold text-stone-900 mb-1"></h3>
+            <p id="confirm-text" class="text-sm text-stone-500 mb-6"></p>
+            <div class="flex gap-3">
+                <button id="confirm-cancel" class="flex-1 px-4 py-2.5 text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-xl font-medium transition-colors">ยกเลิก</button>
+                <button id="confirm-ok" class="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold transition-colors">ลบ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="modal fixed inset-0 bg-stone-950/90 hidden z-[90] flex items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 text-white/70 hover:text-white p-2" aria-label="ปิด"><i class="ph ph-x text-3xl"></i></button>
+        <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl">
+    </div>
+
+    <!-- Toast -->
+    <div id="message-box" class="fixed bottom-5 right-5 left-5 sm:left-auto bg-stone-900 text-white px-5 py-3.5 rounded-xl shadow-2xl translate-y-24 opacity-0 transition-all duration-300 z-[100] flex items-center gap-3 pointer-events-none">
+        <i class="ph-fill ph-check-circle text-primary-400 text-xl"></i>
+        <span id="message-text"></span>
+    </div>
+
+    <script>
+        // ---------- Data ----------
+        const STORAGE_KEY = 'it_manuals_v2';
+
+        function loadManuals() {
+            try {
+                const raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                return Array.isArray(raw) ? raw : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        let manualsList = loadManuals().map(m => ({ ...m, contents: m.contents || [] }));
+        let currentManualId = null;
+        let currentContentId = null;
+        let editingBlockId = null;
+        let editingContentId = null;
+        let sortDir = 'desc';
+        let tempSelectedImages = [];
+
+        function persist() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(manualsList));
+                return true;
+            } catch (e) {
+                showMessage('พื้นที่จัดเก็บเต็ม กรุณาลดขนาดหรือจำนวนรูปภาพ', true);
+                return false;
+            }
+        }
+
+        // ---------- Helpers ----------
+        function escapeHtml(str) {
+            return String(str ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        // Older records stored 'just now' instead of a timestamp
+        function toTime(v) {
+            const t = Date.parse(v);
+            return isNaN(t) ? 0 : t;
+        }
+
+        function relativeTime(v) {
+            const t = toTime(v);
+            if (!t) return v ? String(v) : '-';
+            const diff = (Date.now() - t) / 1000;
+            if (diff < 60) return 'เมื่อสักครู่';
+            if (diff < 3600) return `${Math.floor(diff / 60)} นาทีที่แล้ว`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)} ชั่วโมงที่แล้ว`;
+            if (diff < 86400 * 7) return `${Math.floor(diff / 86400)} วันที่แล้ว`;
+            return new Date(t).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function coverHtml(manual, sizeClass = 'text-5xl') {
+            if (manual.image) {
+                return `<img src="${escapeHtml(manual.image)}" alt="${escapeHtml(manual.title)}" class="w-full h-full object-cover" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'w-full h-full bg-gradient-to-br from-primary-400 to-primary-700'}))">`;
+            }
+            const initial = escapeHtml((manual.title || '?').trim().charAt(0).toUpperCase());
+            return `<div class="w-full h-full bg-gradient-to-br from-primary-400 via-primary-500 to-primary-700 dot-grid flex items-center justify-center">
+                        <span class="font-display font-bold text-white/95 ${sizeClass} drop-shadow">${initial}</span>
+                    </div>`;
+        }
+
+        // ---------- Rendering ----------
+        function manualCard(manual) {
+            const count = manual.contents.length;
+            return `
+                <article onclick="location.hash='#/manual/${manual.id}'" class="bg-white rounded-2xl shadow-soft border border-primary-100/80 overflow-hidden flex flex-col h-full hover:shadow-xl hover:-translate-y-1 hover:border-primary-300 transition-all duration-300 group cursor-pointer relative animate-fadeIn">
+                    <button onclick="event.stopPropagation(); openEditModal(${manual.id})" class="absolute top-3 right-3 bg-white/95 w-9 h-9 rounded-full shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity z-10 hover:bg-primary-50" title="แก้ไขคู่มือ">
+                        <i class="ph-fill ph-pencil-simple text-primary-600"></i>
+                    </button>
+                    <div class="h-44 overflow-hidden bg-primary-50">
+                        <div class="w-full h-full group-hover:scale-105 transition-transform duration-500">${coverHtml(manual)}</div>
+                    </div>
+                    <div class="p-5 flex-grow">
+                        <span class="inline-flex items-center gap-1 text-xs font-medium text-primary-700 bg-primary-50 px-2 py-0.5 rounded-full mb-2">
+                            <i class="ph ph-list-numbers"></i> ${count} หัวข้อ
+                        </span>
+                        <h3 class="font-display text-xl font-semibold text-stone-900 leading-snug line-clamp-2 group-hover:text-primary-700 transition-colors">${escapeHtml(manual.title)}</h3>
+                    </div>
+                    <div class="px-5 py-3.5 border-t border-stone-100 text-xs text-stone-500 flex items-center justify-between">
+                        <span class="flex items-center gap-1.5"><i class="ph ph-clock-clockwise text-primary-500"></i> อัปเดต ${escapeHtml(relativeTime(manual.updated))}</span>
+                        <i class="ph-bold ph-arrow-right text-primary-500 -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all"></i>
+                    </div>
+                </article>`;
+        }
+
+        function emptyState(title, subtitle, withButton) {
+            return `
+                <div class="col-span-full text-center py-16 px-6 bg-white rounded-2xl border-2 border-dashed border-primary-200">
+                    <span class="w-16 h-16 mx-auto rounded-2xl bg-primary-50 text-primary-500 flex items-center justify-center mb-4"><i class="ph-duotone ph-books text-4xl"></i></span>
+                    <p class="font-display text-lg font-semibold text-stone-800">${title}</p>
+                    <p class="text-sm text-stone-500 mt-1">${subtitle}</p>
+                    ${withButton ? `<button onclick="openAddModal()" class="mt-5 bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-glow inline-flex items-center gap-2"><i class="ph-bold ph-plus"></i> สร้างคู่มือแรก</button>` : ''}
+                </div>`;
+        }
+
+        function sortedManuals(list) {
+            const by = document.getElementById('sort-select').value;
+            const dir = sortDir === 'asc' ? 1 : -1;
+            return [...list].sort((a, b) => {
+                if (by === 'name') return a.title.localeCompare(b.title, 'th') * dir;
+                return (toTime(a[by]) - toTime(b[by]) || (a.id - b.id)) * dir;
+            });
+        }
+
+        function renderManuals() {
+            const grid = document.getElementById('manuals-grid');
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            const filtered = manualsList.filter(m =>
+                !query ||
+                m.title.toLowerCase().includes(query) ||
+                m.contents.some(c => c.title.toLowerCase().includes(query))
+            );
+
+            document.getElementById('manuals-count').textContent = query
+                ? `พบ ${filtered.length} จาก ${manualsList.length} คู่มือ`
+                : `ทั้งหมด ${manualsList.length} คู่มือ`;
+
+            if (manualsList.length === 0) {
+                grid.innerHTML = emptyState('ยังไม่มีคู่มือในระบบ', 'เริ่มต้นสร้างคู่มือแรกเพื่อแบ่งปันความรู้ให้ทีม', true);
+                return;
+            }
+            if (filtered.length === 0) {
+                grid.innerHTML = emptyState('ไม่พบคู่มือที่ค้นหา', 'ลองใช้คำค้นอื่น หรือสร้างคู่มือใหม่', false);
+                return;
+            }
+            grid.innerHTML = sortedManuals(filtered).map(manualCard).join('');
+        }
+
+        function toggleSortDir() {
+            sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+            document.getElementById('sort-dir-icon').className = `ph-bold ${sortDir === 'asc' ? 'ph-sort-ascending' : 'ph-sort-descending'}`;
+            renderManuals();
+        }
+
+        function renderHome() {
+            const totalContents = manualsList.reduce((s, m) => s + m.contents.length, 0);
+            document.getElementById('stat-manuals').textContent = manualsList.length;
+            document.getElementById('stat-contents').textContent = totalContents;
+            const latest = [...manualsList].sort((a, b) => toTime(b.updated) - toTime(a.updated));
+            document.getElementById('stat-updated').textContent = latest.length ? relativeTime(latest[0].updated) : '-';
+
+            const recent = document.getElementById('recent-grid');
+            recent.innerHTML = latest.length
+                ? latest.slice(0, 3).map(manualCard).join('')
+                : emptyState('ยังไม่มีคู่มือในระบบ', 'เริ่มต้นสร้างคู่มือแรกเพื่อแบ่งปันความรู้ให้ทีม', true);
+        }
+
+        function heroSearch() {
+            const q = document.getElementById('hero-search').value;
+            location.hash = '#/manuals';
+            setTimeout(() => {
+                document.getElementById('search-input').value = q;
+                renderManuals();
+            }, 0);
+        }
+
+        function renderManualContent() {
+            const manual = manualsList.find(m => m.id === currentManualId);
+            if (!manual) return false;
+
+            document.getElementById('crumb-manual').textContent = manual.title;
+            document.getElementById('detail-title').textContent = manual.title;
+            document.getElementById('detail-cover').innerHTML = coverHtml(manual, 'text-4xl');
+            document.getElementById('detail-created').textContent = 'สร้าง ' + relativeTime(manual.created);
+            document.getElementById('detail-updated').textContent = 'อัปเดต ' + relativeTime(manual.updated);
+            document.getElementById('detail-count').textContent = `${manual.contents.length} หัวข้อ`;
+
+            const list = document.getElementById('manual-content-list');
+            if (manual.contents.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-14 bg-white rounded-2xl border-2 border-dashed border-primary-200">
+                        <i class="ph-duotone ph-file-dashed text-5xl text-primary-300 mb-2"></i>
+                        <p class="font-medium text-stone-700">ยังไม่มีเนื้อหาสำหรับหัวข้อนี้</p>
+                        <p class="text-sm text-stone-500 mt-1 mb-5">เพิ่มขั้นตอนหรือวิธีแก้ปัญหาเพื่อเริ่มต้นเขียนคู่มือ</p>
+                        <button onclick="openAddContentModal()" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-glow inline-flex items-center gap-2"><i class="ph-bold ph-plus"></i> เพิ่มเนื้อหาแรก</button>
+                    </div>`;
+                return true;
+            }
+
+            list.innerHTML = manual.contents.map((content, index) => {
+                const imgCount = (content.images || []).length || (content.image ? 1 : 0);
+                const preview = (content.body || '').slice(0, 120);
+                return `
+                    <a href="#/manual/${manual.id}/content/${content.id}" class="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 hover:border-primary-300 hover:shadow-soft transition-all flex items-center gap-4 group animate-fadeIn">
+                        <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center font-display font-bold group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                            ${index + 1}
+                        </div>
+                        <div class="min-w-0 flex-grow">
+                            <h3 class="font-semibold text-stone-900 group-hover:text-primary-700 transition-colors truncate">${escapeHtml(content.title)}</h3>
+                            <p class="text-sm text-stone-500 truncate">${escapeHtml(preview)}</p>
+                            <p class="text-xs text-stone-400 mt-1 flex items-center gap-3">
+                                <span class="flex items-center gap-1"><i class="ph ph-clock"></i> ${escapeHtml(relativeTime(content.timestamp))}</span>
+                                ${imgCount ? `<span class="flex items-center gap-1"><i class="ph ph-image"></i> ${imgCount} รูป</span>` : ''}
+                            </p>
+                        </div>
+                        <i class="ph-bold ph-caret-right text-xl text-stone-300 group-hover:text-primary-500 group-hover:translate-x-1 transition-all"></i>
+                    </a>`;
+            }).join('');
+            return true;
+        }
+
+        function renderContentReading() {
+            const manual = manualsList.find(m => m.id === currentManualId);
+            const content = manual && manual.contents.find(c => c.id === currentContentId);
+            if (!content) return false;
+
+            document.getElementById('crumb-back').textContent = manual.title;
+            document.getElementById('crumb-back').href = `#/manual/${manual.id}`;
+            document.getElementById('crumb-content').textContent = content.title;
+            document.getElementById('reading-title').textContent = content.title;
+            const t = toTime(content.timestamp);
+            document.getElementById('reading-date').textContent = t
+                ? 'บันทึกเมื่อ ' + new Date(t).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+                : 'ไม่ระบุวันที่';
+            document.getElementById('reading-body').textContent = content.body;
+
+            const images = (content.images && content.images.length) ? content.images : (content.image ? [content.image] : []);
+            const wrap = document.getElementById('reading-images-container');
+            const grid = document.getElementById('reading-images');
+            grid.innerHTML = '';
+            wrap.classList.toggle('hidden', images.length === 0);
+            images.forEach((src, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'bg-primary-50/50 p-2 rounded-xl border border-primary-100 flex justify-center items-center h-56 overflow-hidden group';
+                btn.title = 'คลิกเพื่อดูรูปขนาดเต็ม';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `รูปประกอบ ${i + 1}`;
+                img.className = 'max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300';
+                btn.appendChild(img);
+                btn.onclick = () => openLightbox(src);
+                grid.appendChild(btn);
+            });
+
+            // Previous / next navigation
+            const idx = manual.contents.findIndex(c => c.id === content.id);
+            const prev = manual.contents[idx - 1];
+            const next = manual.contents[idx + 1];
+            const pagerLink = (c, label, align) => c ? `
+                <a href="#/manual/${manual.id}/content/${c.id}" class="bg-white border border-stone-200 hover:border-primary-300 hover:shadow-soft rounded-2xl p-4 transition-all ${align}">
+                    <p class="text-xs text-stone-400 mb-0.5">${label}</p>
+                    <p class="font-medium text-stone-800 truncate">${escapeHtml(c.title)}</p>
+                </a>` : '<div></div>';
+            document.getElementById('content-pager').innerHTML =
+                pagerLink(prev, '← ก่อนหน้า', 'text-left') + pagerLink(next, 'ถัดไป →', 'text-right');
+            return true;
+        }
+
+        // ---------- Routing ----------
+        function showView(viewName) {
+            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+
+            const activeNav = (viewName === 'home') ? 'home' : 'manuals';
+            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+                const active = link.id.endsWith(`-${activeNav}`);
+                link.classList.toggle('bg-primary-50', active);
+                link.classList.toggle('text-primary-700', active);
+                link.classList.toggle('text-stone-500', !active);
+                link.classList.toggle('hover:text-stone-900', !active);
+            });
+            window.scrollTo(0, 0);
+        }
+
+        function router() {
+            const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+
+            if (parts[0] === 'manuals') {
+                showView('manuals');
+                renderManuals();
+            } else if (parts[0] === 'manual' && parts[1]) {
+                currentManualId = Number(parts[1]);
+                if (parts[2] === 'content' && parts[3]) {
+                    currentContentId = Number(parts[3]);
+                    if (!renderContentReading()) return (location.hash = `#/manual/${currentManualId}`);
+                    showView('content-detail');
+                } else {
+                    if (!renderManualContent()) return (location.hash = '#/manuals');
+                    showView('manual-detail');
+                }
+            } else {
+                showView('home');
+                renderHome();
+            }
+        }
+
+        function refreshCurrentView() {
+            router();
+        }
+
+        // ---------- Manual modal ----------
+        const addModal = document.getElementById('add-modal');
+        const manualForm = document.getElementById('add-manual-form');
+        const addContentModal = document.getElementById('add-content-modal');
+        const contentForm = document.getElementById('add-content-form');
+
+        function setManualPreview(src) {
+            document.getElementById('manual-image-preview').innerHTML = src
+                ? `<img src="${escapeHtml(src)}" class="w-full h-full object-cover" alt="">`
+                : '<i class="ph ph-image text-2xl"></i>';
+        }
+
+        function openAddModal() {
+            editingBlockId = null;
+            manualForm.reset();
+            document.getElementById('manual-modal-title').innerHTML = '<i class="ph-fill ph-book-open text-primary-600"></i> เพิ่มคู่มือใหม่';
+            document.getElementById('manual-submit-btn').textContent = 'บันทึกข้อมูล';
+            document.getElementById('manual-delete-btn').classList.add('hidden');
+            document.getElementById('manual-file-name-display').textContent = 'ยังไม่ได้เลือกไฟล์';
+            document.getElementById('input-image').value = '';
+            setManualPreview('');
+            addModal.classList.remove('hidden');
+            setTimeout(() => document.getElementById('input-title').focus(), 50);
+        }
+
+        function openEditModal(id) {
+            const manual = manualsList.find(m => m.id === id);
+            if (!manual) return;
+            editingBlockId = id;
+            manualForm.reset();
+            document.getElementById('manual-modal-title').innerHTML = '<i class="ph-fill ph-pencil-simple text-primary-600"></i> แก้ไขคู่มือ';
+            document.getElementById('manual-submit-btn').textContent = 'บันทึกการแก้ไข';
+            document.getElementById('manual-delete-btn').classList.remove('hidden');
+            document.getElementById('input-title').value = manual.title;
+            // Legacy placeholder URLs are replaced by the generated orange cover
+            const img = manual.image && !manual.image.includes('placehold.co') ? manual.image : '';
+            document.getElementById('input-image').value = img;
+            document.getElementById('manual-file-name-display').textContent = img ? 'มีรูปภาพเดิม (เลือกไฟล์ใหม่เพื่อเปลี่ยน)' : 'ยังไม่ได้เลือกไฟล์';
+            setManualPreview(img);
+            addModal.classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            addModal.classList.add('hidden');
+        }
+
+        function handleManualImageSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.size > 2 * 1024 * 1024) {
+                showMessage('ขนาดไฟล์เกิน 2MB กรุณาเลือกรูปภาพใหม่', true);
+                event.target.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = e => {
+                document.getElementById('input-image').value = e.target.result;
+                document.getElementById('manual-file-name-display').textContent = file.name;
+                setManualPreview(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveManual() {
+            const title = document.getElementById('input-title').value.trim();
+            const image = document.getElementById('input-image').value;
+            if (!title) return;
+            const now = new Date().toISOString();
+
+            if (editingBlockId !== null) {
+                const manual = manualsList.find(m => m.id === editingBlockId);
+                if (manual) Object.assign(manual, { title, image, updated: now });
+                if (!persist()) return;
+                showMessage(`แก้ไข "${title}" เรียบร้อยแล้ว`);
+            } else {
+                manualsList.unshift({ id: Date.now(), title, image, created: now, updated: now, contents: [] });
+                if (!persist()) { manualsList.shift(); return; }
+                showMessage(`เพิ่มคู่มือ "${title}" เรียบร้อยแล้ว`);
+            }
+            closeAddModal();
+            refreshCurrentView();
+        }
+
+        function deleteManual() {
+            const manual = manualsList.find(m => m.id === editingBlockId);
+            if (!manual) return;
+            confirmDialog('ลบคู่มือนี้?', `"${manual.title}" และเนื้อหาทั้งหมด ${manual.contents.length} หัวข้อจะถูกลบถาวร`, () => {
+                manualsList = manualsList.filter(m => m.id !== manual.id);
+                persist();
+                closeAddModal();
+                showMessage('ลบคู่มือเรียบร้อยแล้ว');
+                if (currentManualId === manual.id && location.hash.startsWith('#/manual/')) location.hash = '#/manuals';
+                else refreshCurrentView();
+            });
+        }
+
+        // ---------- Content modal ----------
+        function renderTempPreviews() {
+            document.getElementById('selected-images-preview').innerHTML = tempSelectedImages.map(img => `
+                <div class="relative group rounded-lg border border-primary-100 overflow-hidden h-20 bg-primary-50">
+                    <img src="${img.data}" class="w-full h-full object-cover" alt="">
+                    <button type="button" onclick="removeTempImage(${img.id})" class="absolute top-1 right-1 w-6 h-6 rounded-full bg-stone-900/70 text-white hover:bg-red-600 flex items-center justify-center" title="ลบรูป">
+                        <i class="ph-bold ph-x text-xs"></i>
+                    </button>
+                </div>`).join('');
+        }
+
+        function openAddContentModal() {
+            editingContentId = null;
+            contentForm.reset();
+            tempSelectedImages = [];
+            renderTempPreviews();
+            document.getElementById('content-modal-title').innerHTML = '<i class="ph-fill ph-file-text text-primary-600"></i> เพิ่มเนื้อหาใหม่';
+            document.getElementById('content-submit-btn').textContent = 'บันทึกเนื้อหา';
+            addContentModal.classList.remove('hidden');
+            setTimeout(() => document.getElementById('content-title').focus(), 50);
+        }
+
+        function openEditContentModal() {
+            const manual = manualsList.find(m => m.id === currentManualId);
+            const content = manual && manual.contents.find(c => c.id === currentContentId);
+            if (!content) return;
+            editingContentId = content.id;
+            contentForm.reset();
+            document.getElementById('content-title').value = content.title;
+            document.getElementById('content-body').value = content.body;
+            const images = (content.images && content.images.length) ? content.images : (content.image ? [content.image] : []);
+            tempSelectedImages = images.map((data, i) => ({ id: Date.now() + i, data, size: Math.round(data.length * 0.75) }));
+            renderTempPreviews();
+            document.getElementById('content-modal-title').innerHTML = '<i class="ph-fill ph-pencil-simple text-primary-600"></i> แก้ไขเนื้อหา';
+            document.getElementById('content-submit-btn').textContent = 'บันทึกการแก้ไข';
+            addContentModal.classList.remove('hidden');
+        }
+
+        function closeAddContentModal() {
+            addContentModal.classList.add('hidden');
+            tempSelectedImages = [];
+        }
+
+        function handleMultipleImagesSelect(event) {
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
+            const total = tempSelectedImages.reduce((s, i) => s + i.size, 0) + files.reduce((s, f) => s + f.size, 0);
+            if (total > 5 * 1024 * 1024) {
+                showMessage('ขนาดไฟล์รวมกันใหญ่เกิน 5MB', true);
+                event.target.value = '';
+                return;
+            }
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    tempSelectedImages.push({ id: Date.now() + Math.random(), data: e.target.result, size: file.size });
+                    renderTempPreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+            event.target.value = '';
+        }
+
+        function removeTempImage(id) {
+            tempSelectedImages = tempSelectedImages.filter(img => img.id !== id);
+            renderTempPreviews();
+        }
+
+        function saveContent() {
+            const title = document.getElementById('content-title').value.trim();
+            const body = document.getElementById('content-body').value;
+            const manual = manualsList.find(m => m.id === currentManualId);
+            if (!manual || !title) return;
+            const images = tempSelectedImages.map(img => img.data);
+            const now = new Date().toISOString();
+            const snapshot = JSON.stringify(manual.contents);
+
+            if (editingContentId !== null) {
+                const content = manual.contents.find(c => c.id === editingContentId);
+                if (content) Object.assign(content, { title, body, images, image: '' });
+            } else {
+                manual.contents.push({ id: Date.now(), title, body, images, image: '', timestamp: now });
+            }
+            manual.updated = now;
+
+            if (!persist()) { manual.contents = JSON.parse(snapshot); return; }
+            showMessage(editingContentId !== null ? 'แก้ไขเนื้อหาเรียบร้อยแล้ว' : 'เพิ่มเนื้อหาเรียบร้อยแล้ว');
+            closeAddContentModal();
+            refreshCurrentView();
+        }
+
+        function deleteContent() {
+            const manual = manualsList.find(m => m.id === currentManualId);
+            const content = manual && manual.contents.find(c => c.id === currentContentId);
+            if (!content) return;
+            confirmDialog('ลบเนื้อหานี้?', `"${content.title}" จะถูกลบถาวร`, () => {
+                manual.contents = manual.contents.filter(c => c.id !== content.id);
+                manual.updated = new Date().toISOString();
+                persist();
+                showMessage('ลบเนื้อหาเรียบร้อยแล้ว');
+                location.hash = `#/manual/${manual.id}`;
+            });
+        }
+
+        // ---------- Dialogs ----------
+        function confirmDialog(title, text, onConfirm) {
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-text').textContent = text;
+            modal.classList.remove('hidden');
+            const close = () => modal.classList.add('hidden');
+            document.getElementById('confirm-cancel').onclick = close;
+            document.getElementById('confirm-ok').onclick = () => { close(); onConfirm(); };
+        }
+
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.add('hidden');
+        }
+
+        let toastTimer;
+        function showMessage(text, isError = false) {
+            const box = document.getElementById('message-box');
+            document.getElementById('message-text').textContent = text;
+            box.querySelector('i').className = isError
+                ? 'ph-fill ph-warning-circle text-red-400 text-xl'
+                : 'ph-fill ph-check-circle text-primary-400 text-xl';
+            box.classList.remove('translate-y-24', 'opacity-0');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => box.classList.add('translate-y-24', 'opacity-0'), 3000);
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Escape') return;
+            if (!document.getElementById('lightbox').classList.contains('hidden')) return closeLightbox();
+            if (!document.getElementById('confirm-modal').classList.contains('hidden')) return document.getElementById('confirm-modal').classList.add('hidden');
+            closeAddModal();
+            closeAddContentModal();
+        });
+
+        // ---------- Mobile menu ----------
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('menu-icon-open');
+        const iconClose = document.getElementById('menu-icon-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                iconOpen.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+            } else {
+                closeMobileMenu();
+            }
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            iconOpen.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        // ---------- Init ----------
+        window.addEventListener('hashchange', router);
+        router();
+    </script>
+</body>
+</html>
